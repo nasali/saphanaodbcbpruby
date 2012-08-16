@@ -1,0 +1,9 @@
+#!/bin/sh
+
+# this pack is valid for apps with an odbc.ini in the root
+if [ -f $1/odbc.ini ]; then
+  echo "ODBC INI file detected."
+  exit 0
+else
+  exit 1
+fi
