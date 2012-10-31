@@ -6,13 +6,10 @@ indent() {
 
 echo "-----> Found an odbc.ini"
 
-# if odbc.ini has contents, display them (indented to align)
-# otherwise error
+UNIXODBC_TGZ="unixodbc-2.3.1.tgz"
+ODBC_DIR="unixodbc"
 
-if [ ! -s $1/odbc.ini ]; then
-  echo "odbc.ini was empty"
-  exit 1
-else
-  echo "odbc.ini is not empty, here are the contents" | indent
-  cat $1/odbc.ini
-fi | indent
+echo "Making folder." | indent
+mkdir -p $1/$ODBC_DIR
+echo "Extracting ODBC libraries..." | indent
+tar -C $1/$ODBC_DIR -zxvf $UNIXODBC_TGZ
