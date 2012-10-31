@@ -1,14 +1,5 @@
 #!/usr/bin/env ruby
 
-# sync output
-$stdout.sync = true
+puts "-----> Compile here"
 
-
-def log(message) do
-  puts "-----> ${message}"
-end
-
-log "Found an odbc.ini"
-
-# TODO compile here
 
