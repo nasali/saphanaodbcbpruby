@@ -1,18 +1,6 @@
-#!/bin/sh
+#!/usr/bin/env ruby
 
-indent() {
-  sed -u 's/^/       /'
-}
+# sync output
+puts "-----> Setting sync output to true"
+$stdout.sync = true
 
-echo "-----> Found an odbc.ini"
-
-# if odbc.ini has contents, display them (indented to align)
-# otherwise error
-
-if [ ! -s $1/odbc.ini ]; then
-  echo "odbc.ini was empty"
-  exit 1
-else
-  echo "odbc.ini is not empty, here are the contents" | indent
-  cat $1/odbc.ini
-fi | indent

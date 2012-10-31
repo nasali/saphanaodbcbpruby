@@ -1,9 +1,9 @@
-#!/bin/sh
+#!/usr/bin/env ruby
 
 # this pack is valid for apps with an odbc.ini in the root
-if [ -f $1/odbc.ini ]; then
-  echo "ODBC INI file detected."
-  exit 0
+if File.exists?(ARGV[0])
+  puts "ODBC INI file #{ARGV[0]} detected."
+  return 0
 else
   exit 1
-fi
+end
