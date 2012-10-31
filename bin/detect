@@ -1,9 +1,9 @@
 #!/usr/bin/env ruby
 
 # this pack is valid for apps with an odbc.ini in the root
-if File.exists?("odbc.ini") ]
+if File.exists? "odbc.ini"
   puts "ODBC"
-  exit 0
+  return 0
 else
-  exit 1
+  return 1
 end
