@@ -1,9 +1,11 @@
 #!/usr/bin/env ruby
-puts "Checking #{ARGV.inspect}"
-# this pack is valid for apps with an odbc.ini in the root
-if File.exists?(ARGV[0])
-  puts "ODBC INI file #{ARGV[0]} detected."
+
+puts "Detecting..."
+
+if File.exists?("odbc.ini")
+  puts "ODBC INI file detected!"
   exit 0
 else
+  puts "No ODBC file detected."
   exit 1
 end
