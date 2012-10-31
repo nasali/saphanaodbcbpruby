@@ -6,7 +6,7 @@ indent() {
 
 echo "-----> Found an odbc.ini"
 
-UNIXODBC_TGZ="unixodbc-2.3.1.tgz"
+UNIXODBC_TGZ="../../lib/unixODBC-2.3.1.tgz"
 ODBC_DIR="unixodbc"
 
 echo "Making folder." | indent
