@@ -14,3 +14,6 @@ mkdir -p $1/$ODBC_DIR
 
 echo "Downloading and extracting archive from "$UNIXODBC_TGZ | indent
 curl $UNIXODBC_TGZ -o - | tar -xz -C $1/$ODBC_DIR -f -
+
+echo "Done." | indent
+
