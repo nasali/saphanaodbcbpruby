@@ -1,26 +1,26 @@
-#!/bin/sh
+#!/usr/bin/env ruby
 
-indent() {
-  sed -u 's/^/       /'
-}
+def indent msg 
+  puts "      #{msg}"
+end
 
-echo "-----> Found an odbc.ini"
+puts "-----> Found an odbc.ini"
 
 S3BUCKET="https://s3.amazonaws.com/chameleon-heroku-assets"
-UNIX_ODBC_TGZ="$S3BUCKET/heroku-unixODBC-2.3.1.tar.gz"
-RUBY_ODBC_TGZ="$S3BUCKET/ruby-odbc-0.99994.tar.gz"
+UNIX_ODBC_TGZ="#{S3BUCKET}/heroku-unixODBC-2.3.1.tar.gz"
+RUBY_ODBC_TGZ="#{S3BUCKET}/ruby-odbc-0.99994.tar.gz"
 UNIX_ODBC_DIR="vendor/unixodbc"
 RUBY_ODBC_DIR="vendor/rubyodbc"
 
-echo "Making folders..." | indent
-mkdir -p $1/$UNIX_ODBC_DIR
-mkdir -p $1/$RUBY_ODBC_DIR
+indent "Making folders..."
+puts `mkdir -p #{ARGV[0]}/#{UNIX_ODBC_DIR}`
+puts `mkdir -p #{ARGV[0]}/#{RUBY_ODBC_DIR}`
 
-echo "Downloading and extracting archives from "$S3BUCKET | indent
-curl $UNIX_ODBC_TGZ -o - | tar -xz -C $1/$UNIX_ODBC_DIR -f -
-curl $RUBY_ODBC_TGZ -o - | tar -xz -C $1/RUBY_ODBC_DIR -f -
+indent "Downloading and extracting archives from #{S3BUCKET}..."
+puts `curl #{UNIX_ODBC_TGZ} -o - | tar -xz -C #{ARGV[0]}/#{UNIX_ODBC_DIR} -f - `
+puts `curl #{RUBY_ODBC_TGZ} -o - | tar -xz -C #{ARGV[0]}/#{RUBY_ODBC_DIR} -f - `
 
-echo "Compiling ODBC driver..." | indent
+indent "Compiling ODBC driver..."
 
-echo "Done." | indent
+puts "===== Done."
 
