@@ -28,5 +28,6 @@ ENV['CPATH'] = "#{UNIX_ODBC_DIR}/include:$CPATH"
 ENV['ODBC-DIR'] = "#{UNIX_ODBC_DIR}"
 indent "Set ODBC dir to #{ENV['ODBC-DIR']}"
 
+puts `gem install ruby-odbc -v '0.99994'`
 puts "=====> Done."
 
