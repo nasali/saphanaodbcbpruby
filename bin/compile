@@ -1,5 +1,8 @@
 #!/usr/bin/env ruby
 
+require 'tempfile'
+require 'fileutils'
+
 def indent msg 
   puts "       #{msg}"
 end
@@ -11,6 +14,8 @@ UNIX_ODBC_TGZ="#{S3BUCKET}/heroku-unixODBC-2.3.1.tar.gz"
 RUBY_ODBC_TGZ="#{S3BUCKET}/ruby-odbc-0.99994.tar.gz"
 UNIX_ODBC_DIR="#{ARGV[0]}/vendor/unixodbc"
 RUBY_ODBC_DIR="#{ARGV[0]}/vendor/rubyodbc"
+EXT="#{RUBY_ODBC_DIR}/ruby-odbc-0.99994/ext"
+MAKE_FILE = "#{EXT}/Makefile"
 
 indent "Making folders..."
 puts `mkdir -p #{UNIX_ODBC_DIR}`
@@ -27,28 +32,21 @@ ENV['CPPATH'] = "#{UNIX_ODBC_DIR}/include:$CPPATH"
 ENV['CPATH'] = "#{UNIX_ODBC_DIR}/include:$CPATH"
 ENV['ODBC-DIR'] = "#{UNIX_ODBC_DIR}"
 indent "Set ODBC dir to #{ENV['ODBC-DIR']}"
-EXT="#{RUBY_ODBC_DIR}/ruby-odbc-0.99994/ext"
+
 indent "About to configure ODBC driver..."
 result = `ruby -C#{EXT} extconf.rb --prefix=#{RUBY_ODBC_DIR} --with-unixodbc=#{UNIX_ODBC_DIR} --enable-dlopen --with-odbc-dir=#{UNIX_ODBC_DIR}`
 
 # ZOMG!
 indent "Fixing Makefile"
 
-require 'tempfile'
-require 'fileutils'
-
-path = "#{EXT}/Makefile"
-
 temp_file = Tempfile.new('makefilehack')
-prefix = /^prefix = (.+)$/
-sitearchdir = /^sitearchdir = (.+)$/
 
 begin
-  File.open(path, 'r') do |file|
+  File.open(MAKE_FILE, 'r') do |file|
     file.each_line do |line|
-      if line =~ prefix
+      if line =~ /^prefix = (.+)$/
         temp_file.puts "prefix = #{RUBY_ODBC_DIR}"
-      elsif line =~ sitearchdir
+      elsif line =~ /^sitearchdir = (.+)$/
         temp_file.puts "sitearchdir = #{UNIX_ODBC_DIR}/lib"
       else
         temp_file.puts line
@@ -56,7 +54,7 @@ begin
     end
   end
   temp_file.rewind
-  FileUtils.mv(temp_file.path, path)
+  FileUtils.mv(temp_file.path, MAKE_FILE)
 ensure
   temp_file.close
   temp_file.unlink
@@ -68,7 +66,7 @@ indent "Installing..."
 result = `make -C #{EXT} install`
 
 puts `ls -alh #{RUBY_ODBC_DIR}`
-puts `ls -alh #{UNIX_ODBC_DIR}`
+puts `ls -alh #{UNIX_ODBC_DIR}/lib`
 if $?.to_i == 0
   puts "=====> Done."
 else
