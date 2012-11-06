@@ -40,7 +40,7 @@ require 'fileutils'
 path = "#{EXT}/Makefile"
 indent " BEFORE: \n #{File.read(path)}"
 temp_file = Tempfile.new('makefilehack')
-prefix = /prefix = (.+)/
+prefix = /^prefix = (.+)$/
 #We may need to do the same to sitearchdir
 begin
   File.open(path, 'r') do |file|
