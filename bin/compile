@@ -38,16 +38,20 @@ require 'tempfile'
 require 'fileutils'
 
 path = "#{EXT}/Makefile"
-indent " BEFORE: \n #{File.read(path)}"
+
 temp_file = Tempfile.new('makefilehack')
 prefix = /^prefix = (.+)$/
-#We may need to do the same to sitearchdir
+sitearchdir = /^sitearchdir = (.+)$/
+
 begin
   File.open(path, 'r') do |file|
     file.each_line do |line|
       if line =~ prefix
         temp_file.puts "prefix = #{RUBY_ODBC_DIR}"
         puts "))))))))))))))))))))))))))))))) REPLACED #{line} \n with prefix = #{RUBY_ODBC_DIR}"
+      elsif line =~ sitearchdir
+        temp_file.puts "sitearchdir = #{RUBY_ODBC_DIR}/lib"
+        puts "))))))))))))))))))))))))))))))) REPLACED #{line} \n with sitearchdir = #{RUBY_ODBC_DIR}/lib"  
       else
         temp_file.puts line
       end
@@ -60,7 +64,6 @@ ensure
   temp_file.unlink
 end
 
-indent " AFTER: \n #{File.read(path)}"
 indent "About to compile..."
 puts `make -C #{EXT} && make -C #{EXT} install`
 puts "=====> Done."
