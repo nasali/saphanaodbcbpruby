@@ -29,6 +29,39 @@ ENV['ODBC-DIR'] = "#{UNIX_ODBC_DIR}"
 indent "Set ODBC dir to #{ENV['ODBC-DIR']}"
 EXT="#{RUBY_ODBC_DIR}/ruby-odbc-0.99994/ext"
 indent "Compiling ODBC driver..."
-puts `ruby -C#{EXT} extconf.rb --prefix=#{RUBY_ODBC_DIR} --with-unixodbc=#{UNIX_ODBC_DIR} --with-odbc-dir=#{UNIX_ODBC_DIR} && make -C #{EXT} && make -C #{EXT} install`
+puts `ruby -C#{EXT} extconf.rb --prefix=#{RUBY_ODBC_DIR} --with-unixodbc=#{UNIX_ODBC_DIR} --with-odbc-dir=#{UNIX_ODBC_DIR}`
+
+# ZOMG!
+indent "Fixing Makefile"
+
+require 'tempfile'
+require 'fileutils'
+
+path = "#{EXT}/Makefile"
+indent " BEFORE: \n #{File.read(path)}"
+temp_file = Tempfile.new('makefilehack')
+prefix = /prefix = (.+)/
+#We may need to do the same to sitearchdir
+begin
+  File.open(path, 'r') do |file|
+    file.each_line do |line|
+      if line =~ prefix
+        temp_file.puts "prefix = #{RUBY_ODBC_DIR}"
+        puts "))))))))))))))))))))))))))))))) REPLACED #{line} \n with prefix = #{RUBY_ODBC_DIR}"
+      else
+        temp_file.puts line
+      end
+    end
+  end
+  temp_file.rewind
+  FileUtils.mv(temp_file.path, path)
+ensure
+  temp_file.close
+  temp_file.unlink
+end
+
+indent " AFTER: \n #{File.read(path)}"
+indent "About to compile..."
+puts `make -C #{EXT} && make -C #{EXT} install`
 puts "=====> Done."
 
