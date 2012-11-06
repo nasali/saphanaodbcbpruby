@@ -27,7 +27,7 @@ ENV['CPPATH'] = "#{UNIX_ODBC_DIR}/include:$CPPATH"
 ENV['CPATH'] = "#{UNIX_ODBC_DIR}/include:$CPATH"
 ENV['ODBC-DIR'] = "#{UNIX_ODBC_DIR}"
 indent "Set ODBC dir to #{ENV['ODBC-DIR']}"
-EXT="#{RUBY_ODBC_DIR}/ext"
+EXT="#{RUBY_ODBC_DIR}/ruby-odbc-0.99994/ext"
 indent "Compiling ODBC driver..."
 puts `ruby -C#{EXT} extconf.rb --with-odbc-dir=#{UNIX_ODBC_DIR} && make -C #{EXT} && make -C #{EXT} install`
 puts "=====> Done."
