@@ -17,9 +17,9 @@ puts `mkdir -p #{UNIX_ODBC_DIR}`
 puts `mkdir -p #{RUBY_ODBC_DIR}`
 
 indent "Downloading and extracting archives from #{S3BUCKET}..."
-puts `curl #{UNIX_ODBC_TGZ} -o - | tar -xz -C #{UNIX_ODBC_DIR} -f - `
-puts `curl #{RUBY_ODBC_TGZ} -o - | tar -xz -C #{RUBY_ODBC_DIR} -f - `
-puts `ls -alh #{RUBY_ODBC_DIR}`
+result = `curl #{UNIX_ODBC_TGZ} -o - | tar -xz -C #{UNIX_ODBC_DIR} -f - `
+result = `curl #{RUBY_ODBC_TGZ} -o - | tar -xz -C #{RUBY_ODBC_DIR} -f - `
+
 indent "Setting environment variables..."
 ENV['LD_LIBRARY_PATH'] = "#{UNIX_ODBC_DIR}/lib:$LIBRARY_PATH"
 ENV['LIBRARY_PATH'] = "#{UNIX_ODBC_DIR}/lib:$LIBRARY_PATH"
@@ -28,8 +28,8 @@ ENV['CPATH'] = "#{UNIX_ODBC_DIR}/include:$CPATH"
 ENV['ODBC-DIR'] = "#{UNIX_ODBC_DIR}"
 indent "Set ODBC dir to #{ENV['ODBC-DIR']}"
 EXT="#{RUBY_ODBC_DIR}/ruby-odbc-0.99994/ext"
-indent "Compiling ODBC driver..."
-result = `ruby -C#{EXT} extconf.rb --prefix=#{RUBY_ODBC_DIR} --with-unixodbc=#{UNIX_ODBC_DIR} --with-odbc-dir=#{UNIX_ODBC_DIR}`
+indent "About to configure ODBC driver..."
+result = `ruby -C#{EXT} extconf.rb --prefix=#{RUBY_ODBC_DIR} --with-unixodbc=#{UNIX_ODBC_DIR} --enable-dlopen --with-odbc-dir=#{UNIX_ODBC_DIR}`
 
 # ZOMG!
 indent "Fixing Makefile"
@@ -62,8 +62,13 @@ ensure
   temp_file.unlink
 end
 
-indent "About to compile..."
-result = `make -C #{EXT} && make -C #{EXT} install`
+indent "Compiling..."
+result = `make -C #{EXT}`
+indent "Installing..."
+result = `make -C #{EXT} install`
+
+puts `ls -alh #{RUBY_ODBC_DIR}`
+puts `ls -alh #{UNIX_ODBC_DIR}`
 if $?.to_i == 0
   puts "=====> Done."
 else
