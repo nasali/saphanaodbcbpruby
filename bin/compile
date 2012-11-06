@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 def indent msg 
-  puts "      #{msg}"
+  puts "       #{msg}"
 end
 
 puts "-----> Found an odbc.ini"
@@ -9,18 +9,24 @@ puts "-----> Found an odbc.ini"
 S3BUCKET="https://s3.amazonaws.com/chameleon-heroku-assets"
 UNIX_ODBC_TGZ="#{S3BUCKET}/heroku-unixODBC-2.3.1.tar.gz"
 RUBY_ODBC_TGZ="#{S3BUCKET}/ruby-odbc-0.99994.tar.gz"
-UNIX_ODBC_DIR="vendor/unixodbc"
-RUBY_ODBC_DIR="vendor/rubyodbc"
+UNIX_ODBC_DIR="#{ARGV[0]}/vendor/unixodbc"
+RUBY_ODBC_DIR="#{ARGV[0]}/vendor/rubyodbc"
 
 indent "Making folders..."
-puts `mkdir -p #{ARGV[0]}/#{UNIX_ODBC_DIR}`
-puts `mkdir -p #{ARGV[0]}/#{RUBY_ODBC_DIR}`
+puts `mkdir -p #{UNIX_ODBC_DIR}`
+puts `mkdir -p #{RUBY_ODBC_DIR}`
 
 indent "Downloading and extracting archives from #{S3BUCKET}..."
-puts `curl #{UNIX_ODBC_TGZ} -o - | tar -xz -C #{ARGV[0]}/#{UNIX_ODBC_DIR} -f - `
-puts `curl #{RUBY_ODBC_TGZ} -o - | tar -xz -C #{ARGV[0]}/#{RUBY_ODBC_DIR} -f - `
+puts `curl #{UNIX_ODBC_TGZ} -o - | tar -xz -C #{UNIX_ODBC_DIR} -f - `
+puts `curl #{RUBY_ODBC_TGZ} -o - | tar -xz -C #{RUBY_ODBC_DIR} -f - `
 
-indent "Compiling ODBC driver..."
+indent "Setting environment variables..."
+ENV['LD_LIBRARY_PATH'] = "#{UNIX_ODBC_DIR}/lib:$LIBRARY_PATH"
+ENV['LIBRARY_PATH'] = "#{UNIX_ODBC_DIR}/lib:$LIBRARY_PATH"
+ENV['CPPATH'] = "#{UNIX_ODBC_DIR}/include:$CPPATH"
+ENV['CPATH'] = "#{UNIX_ODBC_DIR}/include:$CPATH"
 
-puts "===== Done."
+#indent "Compiling ODBC driver..."
+
+puts "=====> Done."
 
