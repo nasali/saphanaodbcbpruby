@@ -5,6 +5,7 @@ puts <<-EOF
 ---
 config_vars:
   PATH: "vendor/unixodbc/bin:/usr/bin:/bin"
+  ODBC-DIR: "#{ENV['ODBC-DIR']"
   LD_LIBRARY_PATH: "#{ENV['LD_LIBRARY_PATH']}"
   LIBRARY_PATH: "#{ENV['LIBRARY_PATH']}"
   CPPATH: "#{ENV['CPPATH']}"
