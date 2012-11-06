@@ -1,8 +1,12 @@
-#!/bin/sh
+#!/usr/bin/env ruby
 
-cat << EOF
+puts << EOF
 ---
 ---
 config_vars:
   PATH: "vendor/unixodbc/bin:/usr/bin:/bin"
+  LD_LIBRARY_PATH: "#{ENV['LD_LIBRARY_PATH']}"
+  LIBRARY_PATH: "#{ENV['LIBRARY_PATH']}"
+  CPPATH: "#{ENV['CPPATH']}"
+  CPATH: "#{ENV['CPATH']}"
 EOF
