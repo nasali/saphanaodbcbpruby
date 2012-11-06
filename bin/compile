@@ -6,11 +6,14 @@ indent() {
 
 echo "-----> Found an odbc.ini"
 
-UNIXODBC_TGZ=$PWD"/lib/unixODBC-2.3.1.tgz"
-ODBC_DIR="unixodbc"
+UNIXODBC_TGZ="https://s3.amazonaws.com/chameleon-heroku-assets/heroku-unixODBC-2.3.1.tar.gz"
+ODBC_DIR="vendor/unixodbc"
 
 echo "Making folder." | indent
 mkdir -p $1/$ODBC_DIR
-echo $UNIXODBC_TGZ
-echo "Extracting ODBC libraries..." | indent
-tar -C $1/$ODBC_DIR -zxvf $UNIXODBC_TGZ
+
+echo "Downloading and extracting archive from "$UNIXODBC_TGZ | indent
+curl $UNIXODBC_TGZ -o - | tar -xz -C $1/$ODBC_DIR -f -
+
+echo "Done." | indent
+
