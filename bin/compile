@@ -29,7 +29,7 @@ ENV['ODBC-DIR'] = "#{UNIX_ODBC_DIR}"
 indent "Set ODBC dir to #{ENV['ODBC-DIR']}"
 EXT="#{RUBY_ODBC_DIR}/ruby-odbc-0.99994/ext"
 indent "Compiling ODBC driver..."
-puts `ruby -C#{EXT} extconf.rb --prefix=#{RUBY_ODBC_DIR} --with-unixodbc=#{UNIX_ODBC_DIR} --with-odbc-dir=#{UNIX_ODBC_DIR}`
+result = `ruby -C#{EXT} extconf.rb --prefix=#{RUBY_ODBC_DIR} --with-unixodbc=#{UNIX_ODBC_DIR} --with-odbc-dir=#{UNIX_ODBC_DIR}`
 
 # ZOMG!
 indent "Fixing Makefile"
@@ -48,10 +48,8 @@ begin
     file.each_line do |line|
       if line =~ prefix
         temp_file.puts "prefix = #{RUBY_ODBC_DIR}"
-        puts "))))))))))))))))))))))))))))))) REPLACED #{line} \n with prefix = #{RUBY_ODBC_DIR}"
       elsif line =~ sitearchdir
-        temp_file.puts "sitearchdir = #{RUBY_ODBC_DIR}/lib"
-        puts "))))))))))))))))))))))))))))))) REPLACED #{line} \n with sitearchdir = #{RUBY_ODBC_DIR}/lib"  
+        temp_file.puts "sitearchdir = #{UNIX_ODBC_DIR}/lib"
       else
         temp_file.puts line
       end
@@ -65,6 +63,10 @@ ensure
 end
 
 indent "About to compile..."
-puts `make -C #{EXT} && make -C #{EXT} install`
-puts "=====> Done."
+result = `make -C #{EXT} && make -C #{EXT} install`
+if $?.to_i == 0
+  puts "=====> Done."
+else
+  raise "ERROR! #{$?}"
+end
 
