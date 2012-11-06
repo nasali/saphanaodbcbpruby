@@ -19,7 +19,7 @@ puts `mkdir -p #{RUBY_ODBC_DIR}`
 indent "Downloading and extracting archives from #{S3BUCKET}..."
 puts `curl #{UNIX_ODBC_TGZ} -o - | tar -xz -C #{UNIX_ODBC_DIR} -f - `
 puts `curl #{RUBY_ODBC_TGZ} -o - | tar -xz -C #{RUBY_ODBC_DIR} -f - `
-
+puts `ls -alh #{RUBY_ODBC_DIR}`
 indent "Setting environment variables..."
 ENV['LD_LIBRARY_PATH'] = "#{UNIX_ODBC_DIR}/lib:$LIBRARY_PATH"
 ENV['LIBRARY_PATH'] = "#{UNIX_ODBC_DIR}/lib:$LIBRARY_PATH"
