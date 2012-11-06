@@ -5,8 +5,4 @@ cat << EOF
 ---
 config_vars:
   PATH: "vendor/unixodbc/bin:/usr/bin:/bin"
-addons:
-  - shared-database:5mb
-default_process_types:
-  web: bin/node server.js
 EOF
