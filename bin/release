@@ -1,14 +1,10 @@
 #!/usr/bin/env ruby
 
-DIR = "#{ARGV[0]}/vendor/unixodbc"
+DIR = "vendor/unixodbc"
 
 puts <<-CONF
 ---
 config_vars:
-  PATH: "#{ENV['PATH'].gsub('::',':')}:#{DIR}/bin"
+  PATH: "/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:#{DIR}/bin"
   ODBC-DIR: "#{DIR}"
-  LD_LIBRARY_PATH: "#{DIR}/lib"
-  LIBRARY_PATH: "#{DIR}/lib"
-  CPPATH: "#{DIR}/include"
-  CPATH: "#{DIR}/include"
 CONF
