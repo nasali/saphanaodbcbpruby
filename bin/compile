@@ -25,14 +25,6 @@ indent "Downloading and extracting archives from #{S3BUCKET}..."
 result = `curl #{UNIX_ODBC_TGZ} -o - | tar -xz -C #{UNIX_ODBC_DIR} -f - `
 result = `curl #{RUBY_ODBC_TGZ} -o - | tar -xz -C #{RUBY_ODBC_DIR} -f - `
 
-indent "Setting environment variables..."
-ENV['LD_LIBRARY_PATH'] = "#{UNIX_ODBC_DIR}/lib:$LIBRARY_PATH"
-ENV['LIBRARY_PATH'] = "#{UNIX_ODBC_DIR}/lib:$LIBRARY_PATH"
-ENV['CPPATH'] = "#{UNIX_ODBC_DIR}/include:$CPPATH"
-ENV['CPATH'] = "#{UNIX_ODBC_DIR}/include:$CPATH"
-ENV['ODBC-DIR'] = "#{UNIX_ODBC_DIR}"
-indent "Set ODBC dir to #{ENV['ODBC-DIR']}"
-
 indent "About to configure ODBC driver..."
 result = `ruby -C#{EXT} extconf.rb --prefix=#{RUBY_ODBC_DIR} --with-unixodbc=#{UNIX_ODBC_DIR} --enable-dlopen --with-odbc-dir=#{UNIX_ODBC_DIR}`
 
