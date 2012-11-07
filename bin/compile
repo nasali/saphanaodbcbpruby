@@ -12,8 +12,8 @@ puts "-----> Found an odbc.ini"
 S3BUCKET="https://s3.amazonaws.com/chameleon-heroku-assets"
 UNIX_ODBC_TGZ="#{S3BUCKET}/heroku-unixODBC-2.3.1.tar.gz"
 RUBY_ODBC_TGZ="#{S3BUCKET}/ruby-odbc-0.99994.tar.gz"
-UNIX_ODBC_DIR="#{ARGV[0]}/vendor/unixodbc"
-RUBY_ODBC_DIR="#{ARGV[0]}/vendor/rubyodbc"
+UNIX_ODBC_DIR="#{ARGV[0]}/vendor/lib"
+RUBY_ODBC_DIR="#{ARGV[0]}/vendor"
 EXT="#{RUBY_ODBC_DIR}/ruby-odbc-0.99994/ext"
 MAKE_FILE = "#{EXT}/Makefile"
 
@@ -39,7 +39,7 @@ begin
       if line =~ /^prefix = (.+)$/
         temp_file.puts "prefix = #{RUBY_ODBC_DIR}"
       elsif line =~ /^sitearchdir = (.+)$/
-        temp_file.puts "sitearchdir = #{UNIX_ODBC_DIR}/lib"
+        temp_file.puts "sitearchdir = #{UNIX_ODBC_DIR}"
       else
         temp_file.puts line
       end
@@ -57,8 +57,8 @@ result = `make -C #{EXT}`
 indent "Installing..."
 result = `make -C #{EXT} install`
 
-puts `ls -alh #{RUBY_ODBC_DIR}`
-puts `ls -alh #{UNIX_ODBC_DIR}`
+#puts `ls -alh #{RUBY_ODBC_DIR}`
+#puts `ls -alh #{UNIX_ODBC_DIR}`
 if $?.to_i == 0
   puts "=====> Done."
 else
