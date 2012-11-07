@@ -1,3 +1,4 @@
-export PATH=$PATH:vendor/unixodbc/bin
-export ODBC-DIR=vendor/unixodbc
+#!/usr/bin/env ruby
+
+puts 'ODBC-DIR: "vendor/unixodbc"'
 
