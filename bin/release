@@ -1,5 +1,3 @@
----
-config_vars:
-  PATH: "vendor/unixodbc/bin:/usr/bin:/bin"
-  ODBC-DIR: "vendor/unixodbc"
+export PATH=$PATH:vendor/unixodbc/bin
+export ODBC-DIR=vendor/unixodbc
 
