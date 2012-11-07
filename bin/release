@@ -1,9 +1,5 @@
-#!/usr/bin/env ruby
-
-DIR = "vendor/unixodbc"
-
-puts <<-CONF
+---
 config_vars:
-  PATH: "/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:#{DIR}/bin"
-  ODBC-DIR: "#{DIR}"
-CONF
+  PATH: "vendor/unixodbc/bin:/usr/bin:/bin"
+  ODBC-DIR: "vendor/unixodbc"
+
