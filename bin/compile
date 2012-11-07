@@ -66,7 +66,7 @@ indent "Installing..."
 result = `make -C #{EXT} install`
 
 puts `ls -alh #{RUBY_ODBC_DIR}`
-puts `ls -alh #{UNIX_ODBC_DIR}/lib`
+puts `ls -alh #{UNIX_ODBC_DIR}`
 if $?.to_i == 0
   puts "=====> Done."
 else
