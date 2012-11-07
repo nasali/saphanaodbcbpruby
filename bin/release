@@ -3,7 +3,6 @@
 DIR = "vendor/unixodbc"
 
 puts <<-CONF
----
 config_vars:
   PATH: "/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:#{DIR}/bin"
   ODBC-DIR: "#{DIR}"
