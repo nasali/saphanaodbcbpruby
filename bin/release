@@ -3,10 +3,10 @@
 puts <<-EOF
 ---
 config_vars:
-  PATH: "vendor/unixodbc/bin:$PATH"
+  PATH: "vendor/unixodbc/bin:#{ENV['PATH']}"
   ODBC-DIR: "vendor/unixodbc"
-  LD_LIBRARY_PATH: "vendor/unixodbc/lib:$LIBRARY_PATH"
-  LIBRARY_PATH: "vendor/unixodbc/lib:$LIBRARY_PATH"
-  CPPATH: "vendor/unixodbc/include:$CPPATH"
-  CPATH: "vendor/unixodbc/include:$CPATH"
+  LD_LIBRARY_PATH: "vendor/unixodbc/lib:#{ENV['LIBRARY_PATH']}"
+  LIBRARY_PATH: "vendor/unixodbc/lib:#{ENV['LIBRARY_PATH']}"
+  CPPATH: "vendor/unixodbc/include:#{ENV['CPPATH']}"
+  CPATH: "vendor/unixodbc/include:#{ENV['CPATH']}"
 EOF
