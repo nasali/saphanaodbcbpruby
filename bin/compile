@@ -14,6 +14,7 @@ UNIX_ODBC_TGZ="#{S3BUCKET}/heroku-unixODBC-2.3.1.tar.gz"
 RUBY_ODBC_TGZ="#{S3BUCKET}/ruby-odbc-0.99994.tar.gz"
 UNIX_ODBC_DIR="#{ARGV[0]}/vendor/unixodbc"
 RUBY_ODBC_DIR="#{ARGV[0]}/vendor"
+ODBC_SO_DIR="#{ARGV[0]}/vendor/ruby-1.9.3/lib/ruby/1.9.1"
 EXT="#{RUBY_ODBC_DIR}/ruby-odbc-0.99994/ext"
 MAKE_FILE = "#{EXT}/Makefile"
 
@@ -59,8 +60,8 @@ result = `make -C #{EXT} install`
 
 if $?.success?
   # Rails won't resolve the require 'odbc' otherwise
-  `mkdir -p vendor/ruby-1.9.3/lib/ruby/1.9.1`
-  `cp vendor/odbc.so vendor/ruby-1.9.3/lib/ruby/1.9.1`
+  `mkdir -p #{ODBC_SO_DIR}`
+  `cp vendor/odbc.so #{ODBC_SO_DIR}`
   if $?.success?
     puts "=====> Done."
   else
