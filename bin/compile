@@ -13,7 +13,7 @@ S3BUCKET="https://s3.amazonaws.com/chameleon-heroku-assets"
 UNIX_ODBC_TGZ="#{S3BUCKET}/heroku-unixODBC-2.3.1.tar.gz"
 RUBY_ODBC_TGZ="#{S3BUCKET}/ruby-odbc-0.99994.tar.gz"
 UNIX_ODBC_DIR="#{ARGV[0]}/vendor/unixodbc"
-RUBY_ODBC_DIR="#{ARGV[0]}/app/vendor/bundle/ruby/1.9.1/gems"
+RUBY_ODBC_DIR="#{ARGV[0]}/vendor"
 EXT="#{RUBY_ODBC_DIR}/ruby-odbc-0.99994/ext"
 MAKE_FILE = "#{EXT}/Makefile"
 
