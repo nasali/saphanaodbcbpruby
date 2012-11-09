@@ -39,7 +39,7 @@ begin
       if line =~ /^prefix = (.+)$/
         temp_file.puts "prefix = #{RUBY_ODBC_DIR}"
       elsif line =~ /^sitearchdir = (.+)$/
-        temp_file.puts "sitearchdir = #{UNIX_ODBC_DIR}"
+        temp_file.puts "sitearchdir = #{RUBY_ODBC_DIR}"
       else
         temp_file.puts line
       end
@@ -57,9 +57,7 @@ result = `make -C #{EXT}`
 indent "Installing..."
 result = `make -C #{EXT} install`
 
-#puts `ls -alh #{RUBY_ODBC_DIR}`
-#puts `ls -alh #{UNIX_ODBC_DIR}`
-if $?.to_i == 0
+if $?.success?
   puts "=====> Done."
 else
   raise "ERROR! #{$?}"
