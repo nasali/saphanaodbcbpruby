@@ -10,7 +10,7 @@ end
 puts "-----> Found an odbc.ini"
 
 S3BUCKET="https://s3.amazonaws.com/chameleon-heroku-assets"
-UNIX_ODBC_WITH_HANA_TGZ="#{S3BUCKET}/unixodbc-2.3.1-hana.tar.gz"
+UNIX_ODBC_WITH_HANA_TGZ="#{S3BUCKET}/unixODBC-2.3.1-hana.tar.gz"
 RUBY_ODBC_TGZ="#{S3BUCKET}/ruby-odbc-0.99994.tar.gz"
 UNIX_ODBC_DIR="#{ARGV[0]}/vendor/unixodbc"
 RUBY_ODBC_DIR="#{ARGV[0]}/vendor"
