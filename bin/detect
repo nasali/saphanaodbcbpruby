@@ -1,7 +1,7 @@
 #!/bin/sh
 
-# this pack is valid for apps with an odbc.ini in the root
-if [ -f $1/odbc.ini ]; then
+# this pack is valid for apps with a .odbc.ini in the root
+if [ -f $1/.odbc.ini ]; then
   echo "ODBC"
   exit 0
 else
