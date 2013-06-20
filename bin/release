@@ -3,5 +3,5 @@
 puts <<-CONF
 config_vars:
   LD_LIBRARY_PATH: /app/vendor/unixodbc/lib:/app/vendor/unixodbc
-  PATH: /app/vendor/unixodbc/bin:$PATH
+  PATH: /app/vendor/unixodbc/bin:/usr/local/bin:/usr/bin:/bin
 CONF
