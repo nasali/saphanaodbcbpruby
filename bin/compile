@@ -11,11 +11,11 @@ puts "-----> Found a .odbc.ini"
 
 S3BUCKET="https://s3.amazonaws.com/chameleon-heroku-assets"
 UNIX_ODBC_WITH_HANA_TGZ="#{S3BUCKET}/unixodbc.tar.gz"
-RUBY_ODBC_TGZ="#{S3BUCKET}/ruby-odbc-0.99994.tar.gz"
+RUBY_ODBC_TGZ="#{S3BUCKET}/ruby-odbc-0.99995.tar.gz"
 UNIX_ODBC_DIR="#{ARGV[0]}/vendor/unixodbc"
 RUBY_ODBC_DIR="#{ARGV[0]}/vendor"
 ODBC_SO_DIR="#{ARGV[0]}/vendor/ruby-2.0.0/lib/ruby/2.0.0" #TODO find a less hack-ish way of doing this
-EXT="#{RUBY_ODBC_DIR}/ruby-odbc-0.99994/ext"
+EXT="#{RUBY_ODBC_DIR}/ruby-odbc-0.99995/ext"
 MAKE_FILE = "#{EXT}/Makefile"
 
 indent "Making folders..."
@@ -60,6 +60,7 @@ result = `make -C #{EXT} install`
 
 if $?.success?
   # Rails won't resolve the require 'odbc' otherwise
+  puts `ls -alh #{RUBY_ODBC_DIR}/`
   `mkdir -p #{ODBC_SO_DIR}`
   `cp #{RUBY_ODBC_DIR}/odbc.so #{ODBC_SO_DIR}`
   if $?.success?
