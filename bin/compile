@@ -15,7 +15,7 @@ RUBY_ODBC_TGZ="#{S3BUCKET}/ruby-odbc-0.99995.tar.gz"
 UNIX_ODBC_DIR="#{ARGV[0]}/vendor/unixodbc"
 RUBY_ODBC_DIR="#{ARGV[0]}/vendor"
 ODBC_SO_DIR="#{ARGV[0]}/vendor/ruby-2.0.0/lib/ruby/site_ruby/2.0.0/x86_64-linux" #TODO find a less hack-ish way of doing this
-EXT="#{RUBY_ODBC_DIR}/ruby-odbc-0.99995/ext/utf8"
+EXT="#{RUBY_ODBC_DIR}/ruby-odbc-0.99995/ext"
 MAKE_FILE = "#{EXT}/Makefile"
 
 indent "Making folders..."
@@ -61,7 +61,7 @@ result = `make -C #{EXT} install`
 if $?.success?
   # Rails won't resolve the require 'odbc' otherwise
   `mkdir -p #{ODBC_SO_DIR}`
-  `cp #{RUBY_ODBC_DIR}/odbc_utf8.so #{ODBC_SO_DIR}`
+  `cp #{RUBY_ODBC_DIR}/odbc.so #{ODBC_SO_DIR}`
   if $?.success?
     puts "=====> Done."
   else
