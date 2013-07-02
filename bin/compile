@@ -60,7 +60,6 @@ result = `make -C #{EXT} install`
 
 if $?.success?
   # Rails won't resolve the require 'odbc' otherwise
-  puts `ls -alh #{RUBY_ODBC_DIR}/`
   `mkdir -p #{ODBC_SO_DIR}`
   `cp #{RUBY_ODBC_DIR}/odbc_utf8.so #{ODBC_SO_DIR}`
   if $?.success?
