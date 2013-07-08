@@ -31,8 +31,8 @@ result = `curl #{RUBY_ODBC_TGZ} -o - | tar -xz -C #{RUBY_ODBC_DIR} -f - `
 result = `curl #{RUBY2_TGZ} -o - | tar -xz -C #{RUBY2_DIR} -f - `
 
 indent "About to configure ODBC driver..."
-puts `#{RUBY2_DIR}/bin/ruby --version`
-result = `#{RUBY2_DIR}/bin/ruby -C#{EXT} extconf.rb --prefix=#{RUBY_ODBC_DIR} --with-unixodbc=#{UNIX_ODBC_DIR} --with-odbc-dir=#{UNIX_ODBC_DIR} --enable-dlopen `
+puts `#{RUBY2_DIR}/ruby-2.0.0/bin/ruby --version`
+result = `#{RUBY2_DIR}/ruby-2.0.0/bin/ruby -C#{EXT} extconf.rb --prefix=#{RUBY_ODBC_DIR} --with-unixodbc=#{UNIX_ODBC_DIR} --with-odbc-dir=#{UNIX_ODBC_DIR} --enable-dlopen `
 
 # ZOMG!
 indent "Fixing Makefile"
