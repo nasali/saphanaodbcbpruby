@@ -8,6 +8,7 @@ def indent msg
 end
 
 puts "-----> Found a .odbc.ini"
+`mkdir -p #{ARGV[0]}/vendor/ruby-2.0.0`
 result  = `curl https://s3.amazonaws.com/chameleon-heroku-assets/rubyodbc.tar.gz -o - | tar -zx -C #{ARGV[0]}/vendor/ruby-2.0.0 `
 if $?.success?
   puts "=====> Done."
