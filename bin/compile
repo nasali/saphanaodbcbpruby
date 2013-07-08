@@ -12,8 +12,10 @@ puts "-----> Found a .odbc.ini"
 S3BUCKET="https://s3.amazonaws.com/chameleon-heroku-assets"
 UNIX_ODBC_WITH_HANA_TGZ="#{S3BUCKET}/unixodbc.tar.gz"
 RUBY_ODBC_TGZ="#{S3BUCKET}/ruby-odbc-0.99995.tar.gz"
+RUBY2_TGZ="#{S3BUCKET}/ruby-2.0.0.tar.gz"
 UNIX_ODBC_DIR="#{ARGV[0]}/vendor/unixodbc"
 RUBY_ODBC_DIR="#{ARGV[0]}/vendor"
+RUBY2_DIR="#{ARGV[0]}/vendor/ruby2"
 ODBC_SO_DIR="#{ARGV[0]}/vendor/ruby-2.0.0/lib/ruby/site_ruby/2.0.0/x86_64-linux" #TODO find a less hack-ish way of doing this
 EXT="#{RUBY_ODBC_DIR}/ruby-odbc-0.99995/ext"
 MAKE_FILE = "#{EXT}/Makefile"
@@ -21,13 +23,16 @@ MAKE_FILE = "#{EXT}/Makefile"
 indent "Making folders..."
 `mkdir -p #{UNIX_ODBC_DIR}`
 `mkdir -p #{RUBY_ODBC_DIR}`
+`mkdir -p #{RUBY2_DIR}`
 
 indent "Downloading and extracting archives from #{S3BUCKET}..."
 result = `curl #{UNIX_ODBC_WITH_HANA_TGZ} -o - | tar -xz -C #{UNIX_ODBC_DIR} -f - `
 result = `curl #{RUBY_ODBC_TGZ} -o - | tar -xz -C #{RUBY_ODBC_DIR} -f - `
+result = `curl #{RUBY2_TGZ} -o - | tar -xz -C #{RUBY2_DIR} -f - `
 
 indent "About to configure ODBC driver..."
-result = `ruby -C#{EXT} extconf.rb --prefix=#{RUBY_ODBC_DIR} --with-unixodbc=#{UNIX_ODBC_DIR} --with-odbc-dir=#{UNIX_ODBC_DIR} --enable-dlopen `
+puts `#{RUBY2_DIR}/bin/ruby --version`
+result = `#{RUBY2_DIR}/bin/ruby -C#{EXT} extconf.rb --prefix=#{RUBY_ODBC_DIR} --with-unixodbc=#{UNIX_ODBC_DIR} --with-odbc-dir=#{UNIX_ODBC_DIR} --enable-dlopen `
 
 # ZOMG!
 indent "Fixing Makefile"
