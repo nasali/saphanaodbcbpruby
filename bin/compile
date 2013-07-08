@@ -27,7 +27,7 @@ result = `curl #{UNIX_ODBC_WITH_HANA_TGZ} -o - | tar -xz -C #{UNIX_ODBC_DIR} -f 
 result = `curl #{RUBY_ODBC_TGZ} -o - | tar -xz -C #{RUBY_ODBC_DIR} -f - `
 
 indent "About to configure ODBC driver..."
-result = `ruby -C#{EXT} extconf.rb --prefix=#{RUBY_ODBC_DIR} --with-unixodbc=#{UNIX_ODBC_DIR} --with-odbc-dir=#{UNIX_ODBC_DIR}`
+result = `ruby -C#{EXT} extconf.rb --prefix=#{RUBY_ODBC_DIR} --with-unixodbc=#{UNIX_ODBC_DIR} --with-odbc-dir=#{UNIX_ODBC_DIR} --enable-dlopen `
 
 # ZOMG!
 indent "Fixing Makefile"
