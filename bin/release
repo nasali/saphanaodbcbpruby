@@ -1,7 +1,21 @@
 #!/usr/bin/env ruby
 
+EXISTING_LD_LIBRARY_PATH = ENV['LD_LIBRARY_PATH']
+NEW_LD_LIBRARY_PATH = "vendor/unixodbc/lib:vendor/unixodbc"
+
+if ! EXISTING_LD_LIBRARY_PATH.nil? && ! EXISTING_LD_LIBRARY_PATH.empty?
+  NEW_LD_LIBRARY_PATH = EXISTING_LD_LIBRARY_PATH + ":" + NEW_LD_LIBRARY_PATH
+end
+
+EXISTING_PATH = ENV['PATH']
+NEW_PATH = "vendor/unixodbc/bin"
+
+if ! EXISTING_PATH.nil? && ! EXISTING_PATH.empty?
+  NEW_PATH = EXISTING_PATH + ":" + NEW_PATH
+end
+
 puts <<-CONF
 config_vars:
-  LD_LIBRARY_PATH: "#{ENV['LD_LIBRARY_PATH']}:vendor/unixodbc/lib:vendor/unixodbc"
-  PATH: "#{ENV['PATH']}:vendor/unixodbc/bin"
+  LD_LIBRARY_PATH: #{NEW_LD_LIBRARY_PATH}
+  PATH: #{NEW_PATH}
 CONF
