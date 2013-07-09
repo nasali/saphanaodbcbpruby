@@ -19,8 +19,8 @@ indent "Making folders..."
 
 
 indent "Downloading and extracting archives from #{S3BUCKET}..."
-result = `curl #{UNIX_ODBC_WITH_HANA_TGZ} -o - | tar -xz -C #{UNIX_ODBC_DIR} -f - `
-result = `curl #{RUBY_ODBC_TGZ} -o - | tar -xz -C #{RUBY_ODBC_DIR} -f - `
+result = `curl #{UNIX_ODBC_WITH_HANA_TGZ} -s -o - | tar -xz -C #{UNIX_ODBC_DIR} -f - `
+result = `curl #{RUBY_ODBC_TGZ} -s -o - | tar -xz -C #{RUBY_ODBC_DIR} -f - `
 
 if $?.success?
   puts "=====> Done."
