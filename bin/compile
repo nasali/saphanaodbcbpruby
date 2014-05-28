@@ -12,7 +12,7 @@ RUBY_ODBC_TGZ="#{S3BUCKET}/rubyodbc.tar.gz"
 
 UNIX_ODBC_DIR="#{ARGV[0]}/vendor/unixodbc"
 RUBY_ODBC_DIR="#{ARGV[0]}/vendor/ruby-2.0.0"
-
+puts "\n+++++++ RUBY_VERSION is #{RUBY_VERSION}"
 indent "Making folders..."
 `mkdir -p #{UNIX_ODBC_DIR}`
 `mkdir -p #{RUBY_ODBC_DIR}`
