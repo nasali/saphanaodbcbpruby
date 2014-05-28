@@ -10,10 +10,12 @@ S3BUCKET="https://s3.amazonaws.com/chameleon-heroku-assets"
 UNIX_ODBC_WITH_HANA_TGZ="#{S3BUCKET}/unixodbc.tar.gz"
 RUBY_ODBC_TGZ="#{S3BUCKET}/rubyodbc.tar.gz"
 
+version = `cat #{ARGV[0]}/.ruby-version`
+version = 'ruby-2.0.0' if version.nil?
+
 UNIX_ODBC_DIR="#{ARGV[0]}/vendor/unixodbc"
-RUBY_ODBC_DIR="#{ARGV[0]}/vendor/ruby-2.0.0"
-ver = `cat #{ARGV[0]}/.ruby-version`
-puts "\n+++++++ RUBY_VERSION is #{ver}"
+RUBY_ODBC_DIR="#{ARGV[0]}/vendor/#{version}"
+
 indent "Making folders..."
 `mkdir -p #{UNIX_ODBC_DIR}`
 `mkdir -p #{RUBY_ODBC_DIR}`
